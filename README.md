@@ -183,7 +183,8 @@ app/build/outputs/apk/release/
   - 推送 `v*` tag 时自动发布到 GitHub Releases
 - 如果没有配置签名 Secrets：
   - 自动构建 debug APK
-  - 作为 Actions Artifact 上传
+  - 推送 `v*` tag 时自动发布 debug APK 到 GitHub Releases
+  - 同时也会作为 Actions Artifact 上传
 
 ### 需要配置的 GitHub Secrets
 
@@ -221,6 +222,19 @@ git push origin v1.0.0
    - 构建 APK
    - 创建/更新 GitHub Release
    - 上传 APK 到 Releases
+
+### 关于 debug 签名
+
+如果你暂时没有配置签名 Secrets，工作流会直接使用 debug 构建：
+
+- 输出文件：`app-debug.apk`
+- 可用于测试安装
+- 不适合作为正式长期发布包
+
+建议：
+
+- 先用 debug 自动发布跑通流程
+- 后续再切换到正式签名 release APK
 
 ## 签名说明
 
