@@ -34,12 +34,11 @@ jobs:
           if [ -n "$KEYSTORE_BASE64" ] && [ -n "$KEYSTORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
             mkdir -p .local-signing
             echo "$KEYSTORE_BASE64" | base64 --decode > .local-signing/release.keystore
-            cat > keystore.properties <<EOF
-storeFile=$GITHUB_WORKSPACE/.local-signing/release.keystore
-storePassword=$KEYSTORE_PASSWORD
-keyAlias=$KEY_ALIAS
-keyPassword=$KEY_PASSWORD
-            EOF
+            printf 'storeFile=%s/.local-signing/release.keystore\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
+              "$GITHUB_WORKSPACE" \
+              "$KEYSTORE_PASSWORD" \
+              "$KEY_ALIAS" \
+              "$KEY_PASSWORD" > keystore.properties
             echo "SIGNING_READY=true" >> $GITHUB_ENV
           else
             echo "SIGNING_READY=false" >> $GITHUB_ENV
