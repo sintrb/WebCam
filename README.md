@@ -4,6 +4,18 @@
 
 APP 启动后会在手机本机开启一个 HTTP 服务，局域网内或经过端口转发的客户端可以直接通过浏览器或 HTTP 请求获取抓拍图片；同时 APP 也提供本地预览、手动拍照、设置管理、抓拍记录查看等功能。
 
+## 下载 APK
+
+推荐直接从 GitHub Releases 页面下载已打包好的安装包：
+
+- [https://github.com/sintrb/WebCam/releases](https://github.com/sintrb/WebCam/releases)
+
+建议优先下载最新版本的：
+
+- `WebCam-v1.0-inruan-release.apk`
+
+如果你下载的是 release 安装包，通常可以直接安装使用。
+
 ## 功能特性
 
 - Android 本地摄像头预览
