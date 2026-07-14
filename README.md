@@ -167,6 +167,61 @@ app/src/main/java/com/sintrb/webcam/
 app/build/outputs/apk/release/
 ```
 
+## GitHub Actions 自动发布
+
+仓库已经内置 GitHub Actions 工作流：
+
+- 工作流文件：`.github/workflows/android-release.yml`
+- 触发方式：
+  - 推送 tag：`v*`
+  - 手动触发：`Actions -> Android Release -> Run workflow`
+
+### 自动发布规则
+
+- 如果配置了签名 Secrets：
+  - 自动构建签名 release APK
+  - 推送 `v*` tag 时自动发布到 GitHub Releases
+- 如果没有配置签名 Secrets：
+  - 自动构建 debug APK
+  - 作为 Actions Artifact 上传
+
+### 需要配置的 GitHub Secrets
+
+在仓库 `Settings -> Secrets and variables -> Actions` 中添加：
+
+- `KEYSTORE_BASE64`
+- `KEYSTORE_PASSWORD`
+- `KEY_ALIAS`
+- `KEY_PASSWORD`
+
+其中：
+
+- `KEYSTORE_BASE64` 为 keystore 文件的 base64 编码内容
+
+示例（本地生成 base64）：
+
+```bash
+base64 -i your.keystore | pbcopy
+```
+
+然后将复制结果粘贴到 GitHub Secret 中。
+
+### 发布流程建议
+
+1. 配置好上面的 Secrets
+2. 提交代码并推送
+3. 创建并推送 tag：
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+4. GitHub Actions 会自动：
+   - 构建 APK
+   - 创建/更新 GitHub Release
+   - 上传 APK 到 Releases
+
 ## 签名说明
 
 如果你准备将项目开源，**不要提交你自己的 keystore、密码和私有签名配置**。
